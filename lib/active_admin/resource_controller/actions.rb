@@ -45,6 +45,7 @@ module ActiveAdmin
     alias :edit! :edit
 
     def create(options={}, &block)
+      params.permit! if params.respond_to?(:permit!)
       super(options) do |success, failure|
         block.call(success, failure) if block
         failure.html { render active_admin_template('new') }
@@ -53,6 +54,7 @@ module ActiveAdmin
     alias :create! :create
 
     def update(options={}, &block)
+      params.permit! if params.respond_to?(:permit!)
       super do |success, failure|
         block.call(success, failure) if block
         failure.html { render active_admin_template('edit') }
